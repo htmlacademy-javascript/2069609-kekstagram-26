@@ -132,6 +132,7 @@ const createPhoto = () => ({
 }
 );
 
+// eslint-disable-next-line no-unused-vars
 const similarPhotos = Array.from({length: 25}, createPhoto);
 
 //console.log(similarPhotos);
