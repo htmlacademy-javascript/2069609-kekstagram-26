@@ -97,36 +97,46 @@ const NAMES = [
 //Создаю массив до 1 до 100
 const arrayOfNumbers100 = Array.from({length: 100}, (v, i) => i + 1);
 //Перетасую элементы массива
-const IDCOMMENTS = arrayOfNumbers100.sort(() => Math.random() - 0.5);
+const idComments = arrayOfNumbers100.sort(() => Math.random() - 0.5);
 
-let j = 0;
+let commentIndex = 0;
 //Функция для создания объекта Комментарий
 const getComment = () => ({
-  id: IDCOMMENTS[j++],
+  id: idComments[commentIndex++],
   avatar: `img/avatar-${getRandomNumber (1, 6)}.svg`,
   message: MESSAGES[getRandomNumber (0, 5)],
   nameComment: NAMES[getRandomNumber (0, 24)],
 }
 );
 
+//Функция, создающая массив из объектов Комментарий, число комментариев определяется случайным образом
+const createCommentList = () => {
+  const countComments = getRandomNumber(1,5);
+  const commentsPhoto = Array.from({length: countComments}, getComment);
+  return commentsPhoto;
+};
+
+// Функция, создающая массив из элементов Объект Фотомакет, параметром которой является количество макетов
 const createPhotoMocks = (count) => {
   let photoIndex = 1;
   let urlIndex = 1;
   let descriptionIndex = 0;
-  const photos = [];
-  while (photoIndex <= count) {
-    photos.push({
-      id: photoIndex++,
-      url: `photos/${urlIndex++}.jpg`,
-      description: DESCRIPTIONS[descriptionIndex++],
-      likes: getRandomNumber (15, 200),
-      comments: [getComment()]
-    });
+  //Создаю пустой массив photos без элементов, но с заданной длиной count;
+  //заполняю его '' c помощью fill
+  //каждый элемент item ('') преобразую в объект Фотомакет {}
+  const photos = new Array(count).fill('').map(() => ({
+    id: photoIndex++,
+    url: `photos/${urlIndex++}.jpg`,
+    description: DESCRIPTIONS[descriptionIndex++],
+    likes: getRandomNumber (15, 200),
+    comments: createCommentList()
   }
+  ));
   return photos;
 };
 
-const countPhotos = 25;
-const similarPhotos = createPhotoMocks(countPhotos);
+const MAX_PHOTO_COUNT = 25;
+//Вызываю функцию createPhotoMocks, аргументом передаю 25 (это количество фотомакетов)
+const similarPhotos = createPhotoMocks(MAX_PHOTO_COUNT);
 // eslint-disable-next-line no-console
 console.log(similarPhotos);
