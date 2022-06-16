@@ -27,6 +27,5 @@ function isLengthValid (str, maxLength) {
   }
   return str.length <= maxLength;
 }
-isLengthValid('Привет',3);
-
-export{getRandomNumber};
+export {isLengthValid};
+export {getRandomNumber};

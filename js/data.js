@@ -83,8 +83,7 @@ const getComment = () => ({
 //Функция, создающая массив из объектов Комментарий, число комментариев определяется случайным образом от 1 до 5
 const createCommentList = () => {
   const countComments = getRandomNumber(1,5);
-  const commentsPhoto = Array.from({length: countComments}, getComment);
-  return commentsPhoto;
+  return Array.from({length: countComments}, getComment);
 };
 
 // Функция, создающая массив из элементов Объект Фотомакет, параметром которой является количество макетов
