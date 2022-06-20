@@ -27,5 +27,5 @@ function isLengthValid (str, maxLength) {
   }
   return str.length <= maxLength;
 }
-export {isLengthValid};
-export {getRandomNumber};
+export {getRandomNumber, isLengthValid};
+
