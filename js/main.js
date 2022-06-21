@@ -1,4 +1,4 @@
-import {allPictires} from './picture.js';
-// eslint-disable-next-line no-console
-console.log(allPictires);
+import {similarPhotos} from './data.js';
+import {renderPictures} from './picture.js';
 
+renderPictures(similarPhotos);
