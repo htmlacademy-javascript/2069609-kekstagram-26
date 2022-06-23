@@ -1,30 +1,40 @@
-//Элемент-шаблон
+import {getBigPicture} from './big-picture.js';
+import {similarPhotos} from './data.js';
+
 const similarPictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
-//Контейнер для изображений от других пользователей
 const picturesСontainer = document.querySelector('.pictures');
-//Создаю черный квадрат
 const picturesFragment = document.createDocumentFragment();
 
-//Функция создания реальной фотки c помощью шаблона, параметром которой является объект Фотография
 function createPictureElement(userPhoto) {
   const {likes, url, comments} = userPhoto;
   const pictureElement = similarPictureTemplate.cloneNode(true);
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.querySelector('.picture__img').src = url;
+  // СЮДА ДОБАВИМ ДАТА-АТРИБУТ
+  pictureElement.dataset.id = userPhoto.id;
   return pictureElement;
+
 }
 
-//Функция отрисовки всех фотографий пользователей
-function renderPictures (userPictures) {
-  userPictures.forEach((userPicture) => {
-    const pictureElement = createPictureElement(userPicture);
+function renderPictures (userPhotos) {
+  userPhotos.forEach((userPhoto) => {
+    const pictureElement = createPictureElement(userPhoto);
     picturesFragment.appendChild(pictureElement);
   });
-  return picturesСontainer.appendChild(picturesFragment);
+  picturesСontainer.appendChild(picturesFragment);
 }
 
 export {renderPictures};
+
+
+picturesСontainer.addEventListener('click', (event) => {
+  const userPhotos = similarPhotos;
+  const pictureElement = event.target.closest('.picture');
+  if (event.target && pictureElement !== null) {
+    getBigPicture(event, userPhotos);
+  }
+});
 
