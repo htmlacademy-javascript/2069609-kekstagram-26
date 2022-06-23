@@ -45,31 +45,8 @@ function onEscapeClick(evt) {
   }
 }
 
-/*
 // Функция отрисовки фото в полноэкранном режиме
-function getBigPicture (picture) {
-  const {likes, url, comments, description} = picture;
-  bigPicture.classList.remove('hidden');
-
-  bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
-  bigPicture.querySelector('.likes-count').textContent = likes;
-  bigPicture.querySelector('.comments-count').textContent  = comments.length;
-  bigPicture.querySelector('.social__caption').textContent  = description;
-
-  commentCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
-  body.classList.add('modal-open');
-
-  commentsBlock.innerHTML = '';
-  createCommentsBlock(comments);
-
-  document.addEventListener('keydown', closedBigPictireEsc);
-  bigPictureCancel.addEventListener('click', closedBigPictireX);
-}
-*/
-
-// Функция отрисовки фото в полноэкранном режиме
-function getBigPicture (event, userPhotos) {
+function createBigPicture (event, userPhotos) {
   bigPicture.classList.remove('hidden');
 
   const pictureElement = event.target.closest('.picture');
@@ -90,4 +67,4 @@ function getBigPicture (event, userPhotos) {
   bigPictureCancel.addEventListener('click', onButtonCloseClick);
 }
 
-export {getBigPicture};
+export {createBigPicture};

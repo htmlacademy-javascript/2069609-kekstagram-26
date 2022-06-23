@@ -1,4 +1,4 @@
-import {getBigPicture} from './big-picture.js';
+import {createBigPicture} from './big-picture.js';
 import {similarPhotos} from './data.js';
 
 const similarPictureTemplate = document.querySelector('#picture')
@@ -29,12 +29,12 @@ function renderPictures (userPhotos) {
 
 export {renderPictures};
 
-
-picturesСontainer.addEventListener('click', (event) => {
+function getBigPicture(event) {
   const userPhotos = similarPhotos;
   const pictureElement = event.target.closest('.picture');
   if (event.target && pictureElement !== null) {
-    getBigPicture(event, userPhotos);
+    createBigPicture(event, userPhotos);
   }
-});
+}
 
+picturesСontainer.addEventListener('click', getBigPicture);
