@@ -65,13 +65,11 @@ const NAMES = [
   'Тор'
 ];
 
-//Создаю массив до 1 до 100
 const arrayOfNumbers100 = Array.from({length: 100}, (v, i) => i + 1);
-//Перетасую элементы массива
 const idComments = arrayOfNumbers100.sort(() => Math.random() - 0.5);
 
 let commentIndex = 0;
-//Функция для создания объекта Комментарий
+
 const getComment = () => ({
   id: idComments[commentIndex++],
   avatar: `img/avatar-${getRandomNumber (1, 6)}.svg`,
@@ -80,13 +78,11 @@ const getComment = () => ({
 }
 );
 
-//Функция, создающая массив из объектов Комментарий, число комментариев определяется случайным образом от 1 до 5
 const createCommentList = () => {
   const countComments = getRandomNumber(1,5);
   return Array.from({length: countComments}, getComment);
 };
 
-// Функция, создающая массив из элементов Объект Фотомакет, параметром которой является количество макетов
 const createPhotoMocks = (count) => {
   const photos = new Array(count).fill('').map((item, index) => ({
     id: index + 1,
@@ -98,6 +94,6 @@ const createPhotoMocks = (count) => {
   ));
   return photos;
 };
-//Вызываю функцию createPhotoMocks, аргументом передаю 25 (это количество фотомакетов)
 const similarPhotos = createPhotoMocks(MAX_PHOTO_COUNT);
+
 export {similarPhotos};
