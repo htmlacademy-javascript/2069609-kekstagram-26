@@ -8,13 +8,13 @@ const picturesСontainer = document.querySelector('.pictures');
 const picturesFragment = document.createDocumentFragment();
 
 function createPictureElement(userPhoto) {
-  const {likes, url, comments} = userPhoto;
+  const {likes, url, comments, id} = userPhoto;
   const pictureElement = similarPictureTemplate.cloneNode(true);
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.querySelector('.picture__img').src = url;
   // СЮДА ДОБАВИМ ДАТА-АТРИБУТ
-  pictureElement.dataset.id = userPhoto.id;
+  pictureElement.dataset.id = id;
   return pictureElement;
 
 }
@@ -30,10 +30,11 @@ function renderPictures (userPhotos) {
 export {renderPictures};
 
 function getBigPicture(event) {
-  const userPhotos = similarPhotos;
   const pictureElement = event.target.closest('.picture');
+  const idPicture = pictureElement.dataset.id;
+  const bigPictireObject = similarPhotos.find((similarPhoto) => similarPhoto.id === Number(idPicture));
   if (event.target && pictureElement !== null) {
-    createBigPicture(event, userPhotos);
+    createBigPicture(bigPictireObject);
   }
 }
 

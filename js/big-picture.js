@@ -46,22 +46,20 @@ function onEscapeClick(evt) {
 }
 
 // Функция отрисовки фото в полноэкранном режиме
-function createBigPicture (event, userPhotos) {
+function createBigPicture (userPhoto) {
   bigPicture.classList.remove('hidden');
 
-  const pictureElement = event.target.closest('.picture');
-  const indexPicture = pictureElement.dataset.id - 1;
-  bigPicture.querySelector('.big-picture__img').querySelector('img').src = userPhotos[indexPicture].url;
-  bigPicture.querySelector('.likes-count').textContent = userPhotos[indexPicture].likes;
-  bigPicture.querySelector('.comments-count').textContent  = userPhotos[indexPicture].comments.length;
-  bigPicture.querySelector('.social__caption').textContent  = userPhotos[indexPicture].description;
+  bigPicture.querySelector('.big-picture__img').querySelector('img').src = userPhoto.url;
+  bigPicture.querySelector('.likes-count').textContent = userPhoto.likes;
+  bigPicture.querySelector('.comments-count').textContent  = userPhoto.comments.length;
+  bigPicture.querySelector('.social__caption').textContent  = userPhoto.description;
 
   commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
 
   commentsBlock.innerHTML = '';
-  createCommentsBlock(userPhotos[indexPicture].comments);
+  createCommentsBlock(userPhoto.comments);
 
   document.addEventListener('keydown', onEscapeClick);
   bigPictureCancel.addEventListener('click', onButtonCloseClick);
