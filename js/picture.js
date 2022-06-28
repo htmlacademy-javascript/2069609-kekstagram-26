@@ -31,10 +31,12 @@ export {renderPictures};
 
 function getBigPicture(event) {
   const pictureElement = event.target.closest('.picture');
-  const idPicture = pictureElement.dataset.id;
-  const bigPictireObject = similarPhotos.find((similarPhoto) => similarPhoto.id === Number(idPicture));
-  if (event.target && pictureElement !== null) {
-    createBigPicture(bigPictireObject);
+  if (pictureElement) {
+    const idPicture = pictureElement.dataset.id;
+    const bigPictireObject = similarPhotos.find((similarPhoto) => similarPhoto.id === Number(idPicture));
+    if (event.target && pictureElement !== null) {
+      createBigPicture(bigPictireObject);
+    }
   }
 }
 
