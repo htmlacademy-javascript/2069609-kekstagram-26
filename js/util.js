@@ -27,5 +27,15 @@ function isLengthValid (str, maxLength) {
   }
   return str.length <= maxLength;
 }
-export {getRandomNumber, isLengthValid};
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+function haveSameElements(arrayOfElements) {
+  const uniqueArray = [...new Set(arrayOfElements)];
+  if (uniqueArray.length === arrayOfElements.length) {
+    return false;
+  }
+  return true;
+}
+
+export {getRandomNumber, isLengthValid, isEscapeKey, haveSameElements};

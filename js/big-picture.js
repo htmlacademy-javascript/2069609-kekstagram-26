@@ -1,3 +1,5 @@
+import {isEscapeKey} from './util.js';
+
 // Окно большой фотки
 const bigPicture = document.querySelector('.big-picture');
 // Кнопка для выхода из полноэкранного просмотра изображения
@@ -37,7 +39,8 @@ function onButtonCloseClick() {
 
 // Функция выхода из полноэкранного режима фотогафии (при нажатии на клавишу ESC)
 function onEscapeClick(evt) {
-  if (evt.keyCode === 27) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
     body.classList.remove('modal-open');
     commentCount.classList.remove('hidden');
     commentsLoader.classList.remove('hidden');
@@ -45,21 +48,24 @@ function onEscapeClick(evt) {
   }
 }
 
+
 // Функция отрисовки фото в полноэкранном режиме
 function createBigPicture (userPhoto) {
+  const {url, likes, comments, description} = userPhoto;
+
   bigPicture.classList.remove('hidden');
 
-  bigPicture.querySelector('.big-picture__img').querySelector('img').src = userPhoto.url;
-  bigPicture.querySelector('.likes-count').textContent = userPhoto.likes;
-  bigPicture.querySelector('.comments-count').textContent  = userPhoto.comments.length;
-  bigPicture.querySelector('.social__caption').textContent  = userPhoto.description;
+  bigPicture.querySelector('.big-picture__img').querySelector('img').src = url;
+  bigPicture.querySelector('.likes-count').textContent = likes;
+  bigPicture.querySelector('.comments-count').textContent  = comments.length;
+  bigPicture.querySelector('.social__caption').textContent  = description;
 
   commentCount.classList.add('hidden');
   commentsLoader.classList.add('hidden');
   body.classList.add('modal-open');
 
   commentsBlock.innerHTML = '';
-  createCommentsBlock(userPhoto.comments);
+  createCommentsBlock(comments);
 
   document.addEventListener('keydown', onEscapeClick);
   bigPictureCancel.addEventListener('click', onButtonCloseClick);
