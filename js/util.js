@@ -30,15 +30,14 @@ function isLengthValid (str, maxLength) {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-function haveSameHashTags(arrayOfHashTags) {
-  for (let i = 0; i < arrayOfHashTags.length - 1; i++) {
-    for (let j = i + 1; j < arrayOfHashTags.length; j++) {
-      if (arrayOfHashTags[i] === arrayOfHashTags[j]) {
-        return true;
-      }
+function haveSameElements(arrayOfElements) {
+  arrayOfElements.sort();
+  for (let i = 0; i < arrayOfElements.length - 1; i++) {
+    if (arrayOfElements[i] === arrayOfElements[i+1]) {
+      return true;
     }
   }
   return false;
 }
-export {getRandomNumber, isLengthValid, isEscapeKey, haveSameHashTags};
 
+export {getRandomNumber, isLengthValid, isEscapeKey, haveSameElements};

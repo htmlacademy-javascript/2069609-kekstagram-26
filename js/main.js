@@ -1,5 +1,5 @@
 import {similarPhotos} from './data.js';
 import {renderPictures} from './picture.js';
-import './valid-form.js';
+import './submit-form.js';
 
 renderPictures(similarPhotos);
