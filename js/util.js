@@ -31,11 +31,7 @@ function isLengthValid (str, maxLength) {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 function haveSameElements(arrayOfElements) {
-  const uniqueArray = [...new Set(arrayOfElements)];
-  if (uniqueArray.length === arrayOfElements.length) {
-    return false;
-  }
-  return true;
+  return [...new Set(arrayOfElements)].length !== arrayOfElements.length;
 }
 
 export {getRandomNumber, isLengthValid, isEscapeKey, haveSameElements};
