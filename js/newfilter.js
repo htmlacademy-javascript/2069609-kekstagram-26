@@ -12,7 +12,7 @@ const photoFilters = [
     min: 0,
     max: 1,
     step: 0.1,
-    start: 1
+    formatValue: ''
   },
   {
     filterId: 'effect-chrome',
@@ -21,7 +21,7 @@ const photoFilters = [
     min: 0,
     max: 1,
     step: 0.1,
-    start: 0.5
+    formatValue: ''
   },
   {
     filterId: 'effect-sepia',
@@ -30,7 +30,7 @@ const photoFilters = [
     min: 0,
     max: 1,
     step: 0.1,
-    start: 1
+    formatValue: ''
   },
   {
     filterId: 'effect-marvin',
@@ -39,7 +39,7 @@ const photoFilters = [
     min: 0,
     max: 100,
     step: 1,
-    start: 0
+    formatValue: '%'
   },
   {
     filterId: 'effect-phobos',
@@ -48,7 +48,7 @@ const photoFilters = [
     min: 0,
     max: 3,
     step: 0.1,
-    start: 3
+    formatValue: 'px'
   },
   {
     filterId: 'effect-heat',
@@ -57,7 +57,7 @@ const photoFilters = [
     min: 1,
     max: 3,
     step: 0.1,
-    start: 0
+    formatValue: ''
   }
 ];
 
@@ -71,10 +71,19 @@ function getParamSlider(filter) {
         min: filter.min,
         max: filter.max,
       },
-      start: filter.start,
+      start: filter.max,
+      step: filter.step
     });
 }
 
+function onUpdateSlider(filter) {
+  //ЗДЕСЬ ПРОИЗОШЛА КАКАЯ-ТО МАГИЯ. ПРОШУ ОБЪЯСНИТЬ, СДЕЛАЛА ИНТУИТИВНО!!!!!
+  return function() {
+    effectValueInput.value = sliderElement.noUiSlider.get();
+    console.log(effectValueInput.value);
+    imgPreview.style.filter = `${filter.filterEffect}(${effectValueInput.value}${filter.formatValue})`;
+  };
+}
 
 function onFilterClick(evt) {
   console.log('Клик по фильтру');
@@ -86,17 +95,21 @@ function onFilterClick(evt) {
   noUiSlider.create(sliderElement, getParamSlider(currentFilter));
   // Добавляем класс фотографии
   imgPreview.classList.add(`effects__preview--${currentFilter.filterName}`);
-  // Обработчик событий на изменеие положения слайдера
-  sliderElement.noUiSlider.on('update', onUpdateSlider);
+  // Обработчик событий на изменеие уровня слайдера
+  sliderElement.noUiSlider.on('update', onUpdateSlider(currentFilter));
 }
 
 function onOriginalFilterClick() {
   console.log('Клик по оригиналу');
   sliderElement.noUiSlider.destroy();
+  //imgPreview.style.filter = '';
+  imgPreview.className = 'img-upload__preview';
+  imgPreview.style.filter = '';
+  effectValueInput.value = '';
 }
 
 // Действия, при нажатии на один из фильтров
-function getChange(evt) {
+function onChangeFilter(evt) {
   if (evt.target.closest('.effects__list')) {
     if (evt.target.id !== 'effect-none') {
       onFilterClick(evt);
@@ -106,9 +119,5 @@ function getChange(evt) {
   }
 }
 // Обработчик событий на изменение фильтра
-effectsList.addEventListener('change', getChange);
+effectsList.addEventListener('change', onChangeFilter);
 
-function onUpdateSlider() {
-  effectValueInput.value = sliderElement.noUiSlider.get();
-  console.log(effectValueInput.value);
-}
