@@ -77,32 +77,35 @@ function getParamSlider(filter) {
 }
 
 function onUpdateSlider(filter) {
-  //ЗДЕСЬ ПРОИЗОШЛА КАКАЯ-ТО МАГИЯ. ПРОШУ ОБЪЯСНИТЬ, СДЕЛАЛА ИНТУИТИВНО!!!!!
+  //!!!!!ЗДЕСЬ ПРОИЗОШЛА КАКАЯ-ТО МАГИЯ. ПРОШУ ОБЪЯСНИТЬ, СДЕЛАЛА ИНТУИТИВНО!!!!!
   return function() {
     effectValueInput.value = sliderElement.noUiSlider.get();
-    console.log(effectValueInput.value);
     imgPreview.style.filter = `${filter.filterEffect}(${effectValueInput.value}${filter.formatValue})`;
   };
 }
 
+function desctroySlider() {
+  if (sliderElement.noUiSlider) {
+    sliderElement.noUiSlider.destroy();
+  }
+}
+
 function onFilterClick(evt) {
-  console.log('Клик по фильтру');
   const currentIdFilter = evt.target.id;
-  console.log(currentIdFilter);
   // По id находим на какой фильтр мы кликнули
   const currentFilter = photoFilters.find((photoFilter) => photoFilter.filterId === currentIdFilter);
-  console.log(currentFilter);
   noUiSlider.create(sliderElement, getParamSlider(currentFilter));
   // Добавляем класс фотографии
   imgPreview.classList.add(`effects__preview--${currentFilter.filterName}`);
   // Обработчик событий на изменеие уровня слайдера
   sliderElement.noUiSlider.on('update', onUpdateSlider(currentFilter));
+  if (currentIdFilter !== 'effect-none') {
+    effectsList.addEventListener('click', desctroySlider);
+  }
 }
 
 function onOriginalFilterClick() {
-  console.log('Клик по оригиналу');
-  sliderElement.noUiSlider.destroy();
-  //imgPreview.style.filter = '';
+  desctroySlider();
   imgPreview.className = 'img-upload__preview';
   imgPreview.style.filter = '';
   effectValueInput.value = '';
