@@ -1,5 +1,5 @@
 const sliderElement = document.querySelector('.effect-level__slider');
-const picture = document.querySelector('.img-upload__preview');
+const imgPreview = document.querySelector('.img-upload__preview');
 const effectValue = document.querySelector('.effect-level__value');
 const originFilter = document.querySelector('#effect-none');
 
@@ -23,7 +23,7 @@ const photoFilters = [
     start: 1
   },
   {
-    filterId: 'effect-sepia',
+    filterId: 'effect- sepia',
     filterName: 'sepia',
     filterEffect: 'sepia',
     min: 0,
@@ -75,11 +75,14 @@ function getParamSlider(objectPhotoFilter) {
   return paramFilter;
 }
 
-function getValueEffect(filterObject) {
+function getValueEffect() {
   effectValue.value = sliderElement.noUiSlider.get();
-  // eslint-disable-next-line no-console
   console.log(effectValue.value);
-  picture.style.filter = `${filterObject.filterEffect}(${effectValue.value})`;
+  console.log(imgPreview);
+}
+
+function getValue(filterObject) {
+  return `${filterObject.filterEffect}(${effectValue.value})`;
 }
 
 
@@ -89,11 +92,11 @@ function onFilterChange(event) {
     const idFilter = event.target.id;
     const filterObject = photoFilters.find((photoFilter) => photoFilter.filterId === idFilter);
     if (event.target && idFilter !== 'null') {
-      // eslint-disable-next-line no-console
       console.log('щёлк');
       noUiSlider.create(sliderElement, getParamSlider(filterObject));
-      picture.classList.add(`effects__preview--${filterObject.filterName}`);
-      sliderElement.noUiSlider.on('update', getValueEffect(filterObject));
+      imgPreview.classList.add(`effects__preview--${filterObject.filterName}`);
+      sliderElement.noUiSlider.on('update', getValueEffect);
+      imgPreview.style.filter = getValue(filterObject);
     }
   }
 }

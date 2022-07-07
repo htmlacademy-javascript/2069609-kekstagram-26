@@ -5,4 +5,4 @@ import './submit-form.js';
 renderPictures(similarPhotos);
 
 import './scale.js';
-import './filter.js';
+import './newfilter.js';
