@@ -1,15 +1,15 @@
 const picture = document.querySelector('.img-upload__preview');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
-const minValueScale = 25;
-const maxValueScale = 100;
-const stepValueScale = 25;
+const MIN_VALUE = 25;
+const MAX_VALUE = 100;
+const STEP_VALUE = 25;
 //Значение масштаба по умолчанию
-const valueDefault = 100;
+const VALUE_DEFAULT = 100;
 // Поле значение масштаба
 const scale = document.querySelector('.scale__control--value');
-let scaleCurrent = valueDefault;
-scale.setAttribute('value', `${valueDefault}%`);
+let scaleCurrent = VALUE_DEFAULT;
+scale.setAttribute('value', `${VALUE_DEFAULT}%`);
 
 function updateScale() {
   scale.setAttribute('value', `${scaleCurrent}%`);
@@ -17,17 +17,17 @@ function updateScale() {
 }
 
 function getSmaller() {
-  scaleCurrent = scaleCurrent - stepValueScale;
-  if (scaleCurrent < minValueScale) {
-    scaleCurrent = minValueScale;
+  scaleCurrent = scaleCurrent - STEP_VALUE;
+  if (scaleCurrent < MIN_VALUE) {
+    scaleCurrent = MIN_VALUE;
   }
   updateScale();
 }
 
 function getBigger() {
-  scaleCurrent = scaleCurrent + stepValueScale;
-  if (scaleCurrent > maxValueScale) {
-    scaleCurrent = maxValueScale;
+  scaleCurrent = scaleCurrent + STEP_VALUE;
+  if (scaleCurrent > MAX_VALUE) {
+    scaleCurrent = MAX_VALUE;
   }
   updateScale();
 }
