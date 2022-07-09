@@ -1,5 +1,7 @@
 import {pristine} from './valid-form.js';
 import {isEscapeKey} from './util.js';
+import './scale.js';
+import './effects.js';
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadFile = document.querySelector('#upload-file');

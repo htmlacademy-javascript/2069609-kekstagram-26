@@ -25,7 +25,7 @@ const pristine = new Pristine(imgUploadForm, {
 let errorHashtags = HashtagRules.NO_ERROR;
 
 //функция валидации одного хэштега
-function validateOneHashtag(hashtag) {
+function validateHashtag(hashtag) {
   const reHashtag =  /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/;
   if (!reHashtag.test(hashtag)) {
     if (hashtag[0] !== '#') {
@@ -49,7 +49,7 @@ function validateOneHashtag(hashtag) {
 // true - если все правила выполнены, false - если есть ошибка
 function validateHashtags(value) {
   value = value.trim();
-  if (value !== '') {
+  if (value) {
     const hashtags = value.toLowerCase().split(' ');
     if (hashtags.length > 5) {
       errorHashtags = HashtagRules.MAX_COUNT;
@@ -60,7 +60,7 @@ function validateHashtags(value) {
       return false;
     }
     for (let i = 0; i < hashtags.length; i++) {
-      if (!validateOneHashtag(hashtags[i])) {
+      if (!validateHashtag(hashtags[i])) {
         return false;
       }
     }
