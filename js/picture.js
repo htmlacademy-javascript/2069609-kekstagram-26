@@ -1,5 +1,4 @@
 import {createBigPicture} from './big-picture.js';
-import {similarPhotos} from './data.js';
 
 const similarPictureTemplate = document.querySelector('#picture')
   .content
@@ -29,15 +28,18 @@ function renderPictures (userPhotos) {
 
 export {renderPictures};
 
-function getBigPicture(event) {
-  const pictureElement = event.target.closest('.picture');
-  if (pictureElement) {
-    const idPicture = pictureElement.dataset.id;
-    const bigPictireObject = similarPhotos.find((similarPhoto) => similarPhoto.id === Number(idPicture));
-    if (event.target && pictureElement !== null) {
-      createBigPicture(bigPictireObject);
+function onUserPhotoClick (userPhotos) {
+  function getBigPicture(event) {
+    const pictureElement = event.target.closest('.picture');
+    if (pictureElement) {
+      const idPicture = pictureElement.dataset.id;
+      const bigPictireObject = userPhotos.find((userPhoto) => userPhoto.id === Number(idPicture));
+      if (event.target && pictureElement !== null) {
+        createBigPicture(bigPictireObject);
+      }
     }
   }
+  picturesСontainer.addEventListener('click', getBigPicture);
 }
 
-picturesСontainer.addEventListener('click', getBigPicture);
+export {onUserPhotoClick};

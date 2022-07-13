@@ -1,5 +1,16 @@
-import {similarPhotos} from './data.js';
-import {renderPictures} from './picture.js';
-import './submit-form.js';
+import {renderPictures, onUserPhotoClick} from './picture.js';
+import {setUserFormSubmit} from './submit-form.js';
+import {closeImgUploadForm} from './upload-form.js';
+import {getData} from './api.js';
+import {showAlert} from './util.js';
 
-renderPictures(similarPhotos);
+
+setUserFormSubmit(closeImgUploadForm);
+
+getData((photos) => {
+  renderPictures(photos);
+  onUserPhotoClick(photos);
+},
+() => {
+  showAlert('Ошибка загрузки данных с сервера');
+});

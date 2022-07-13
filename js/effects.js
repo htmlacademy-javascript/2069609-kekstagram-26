@@ -1,12 +1,8 @@
-import {isEscapeKey} from './util.js';
 import {desctroySlider, renderSlider} from './slider.js';
 
 const imgPreview = document.querySelector('.img-upload__preview');
 //через стили это поле невидимое
 const effectValueInput = document.querySelector('.effect-level__value');
-//Контейнер, в котором сидят все фильтры
-const effectsList = document.querySelector('.effects__list');
-const uploadCancel = document.querySelector('#upload-cancel');
 
 //Описываем фильтры
 const SliderConfigs = {
@@ -97,22 +93,4 @@ function onChangeFilter(evt) {
   }
 }
 
-function onButtonCloseClick() {
-  onOriginalFilterClick();
-}
-
-function onEscapeClick(evt) {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    onOriginalFilterClick();
-  }
-}
-
-// Обработчик событий на изменение фильтра
-effectsList.addEventListener('change', onChangeFilter);
-
-//Закрытие формы редактирования изображения при клике мышкой на Х
-uploadCancel.addEventListener('click', onButtonCloseClick);
-
-//Закрытие формы загрузки изо при нажатии клавишы Escape
-document.addEventListener('keydown', onEscapeClick);
+export{onOriginalFilterClick, onChangeFilter};
