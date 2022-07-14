@@ -1,6 +1,4 @@
 const picture = document.querySelector('.img-upload__preview');
-const buttonSmaller = document.querySelector('.scale__control--smaller');
-const buttonBigger = document.querySelector('.scale__control--bigger');
 const MIN_VALUE = 25;
 const MAX_VALUE = 100;
 const STEP_VALUE = 25;
@@ -11,9 +9,9 @@ const scale = document.querySelector('.scale__control--value');
 let scaleCurrent = VALUE_DEFAULT;
 scale.setAttribute('value', `${VALUE_DEFAULT}%`);
 
-function updateScale() {
-  scale.setAttribute('value', `${scaleCurrent}%`);
-  picture.style.transform = `scale(${(scaleCurrent/100).toFixed(2)})`;
+function updateScale(scaleValue) {
+  scale.setAttribute('value', `${scaleValue}%`);
+  picture.style.transform = `scale(${(scaleValue/100).toFixed(2)})`;
 }
 
 function getSmaller() {
@@ -21,7 +19,7 @@ function getSmaller() {
   if (scaleCurrent < MIN_VALUE) {
     scaleCurrent = MIN_VALUE;
   }
-  updateScale();
+  updateScale(scaleCurrent);
 }
 
 function getBigger() {
@@ -29,8 +27,8 @@ function getBigger() {
   if (scaleCurrent > MAX_VALUE) {
     scaleCurrent = MAX_VALUE;
   }
-  updateScale();
+  updateScale(scaleCurrent);
 }
 
-buttonSmaller.addEventListener('click', getSmaller);
-buttonBigger.addEventListener('click', getBigger);
+export{updateScale, VALUE_DEFAULT, getBigger, getSmaller};
+

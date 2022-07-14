@@ -1,61 +1,125 @@
 import {pristine} from './valid-form.js';
 import {isEscapeKey} from './util.js';
-import './scale.js';
-import './effects.js';
+import {sendData} from './api.js';
+import {openImgUploadForm} from './upload-form.js';
 
-const imgUploadForm = document.querySelector('.img-upload__form');
-const uploadFile = document.querySelector('#upload-file');
-const uploadOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
-const uploadCancel = document.querySelector('#upload-cancel');
-const textHashtags = imgUploadForm.querySelector('.text__hashtags');
-const textDescription = document.querySelector('.text__description');
+const imgUploadForm = document.querySelector('.img-upload__form');
+const submitButton = document.querySelector('.img-upload__submit');
+const successForm = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+const errorForm = document.querySelector('#error')
+  .content
+  .querySelector('.error');
 
-function openImgUploadForm() {
-  uploadOverlay.classList.remove('hidden');
-  body.classList.add('modal-open');
+function closeSuccessForm() {
+  body.removeChild(successForm);
+  const successButton = successForm.querySelector('.success__button');
+  successButton.removeEventListener('click', onSuccessButtonClick);
+  document.removeEventListener('keydown', onEscapeClickSuccessForm);
+  document.removeEventListener('click', onOutSuccessFormClick);
 }
 
-function closeImgUploadForm() {
-  uploadOverlay.classList.add('hidden');
+function onSuccessButtonClick() {
+  closeSuccessForm();
+}
+
+function onErrorButtonClick() {
+  closeErrorForm();
+}
+
+function closeErrorForm() {
+  openImgUploadForm();
+  body.removeChild(errorForm);
+  const errorButton = successForm.querySelector('.error__button');
+  if (errorButton) {
+    errorButton.removeEventListener('click', onErrorButtonClick);
+  }
+  document.removeEventListener('keydown', onEscapeClickErrorForm);
+  document.removeEventListener('click', onOutErrorFormClick);
+}
+
+function onEscapeClickSuccessForm(evt){
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeSuccessForm();
+  }
+}
+
+function onOutSuccessFormClick(evt) {
+  if (evt.target.className !== 'success__inner') {
+    closeSuccessForm();
+  }
+}
+
+function onEscapeClickErrorForm(evt){
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeErrorForm();
+  }
+}
+
+function onOutErrorFormClick(evt) {
+  if (evt.target.className !== 'error__inner') {
+    closeErrorForm();
+  }
+}
+
+function showSuccessForm() {
+  body.appendChild(successForm);
+  const successButton = successForm.querySelector('.success__button');
+  successButton.addEventListener('click', onSuccessButtonClick);
+  document.addEventListener('keydown', onEscapeClickSuccessForm);
+  document.addEventListener('click', onOutSuccessFormClick);
+}
+
+function showErrorForm() {
+  document.querySelector('.img-upload__overlay').classList.add('hidden');
   body.classList.remove('modal-open');
-  uploadFile.value = '';
-  textHashtags.value = '';
-  textDescription.value = '';
-}
-
-function onButtonCloseClick() {
-  closeImgUploadForm();
-}
-
-function onEscapeClick(evt) {
-  if (isEscapeKey(evt) && textHashtags !== document.activeElement) {
-    if (textDescription !== document.activeElement) {
-      evt.preventDefault();
-      closeImgUploadForm();
-    }
+  body.appendChild(errorForm);
+  const errorButton = successForm.querySelector('.error__button');
+  if (errorButton){
+    errorButton.addEventListener('click', onErrorButtonClick);
   }
+  document.addEventListener('keydown', onEscapeClickErrorForm);
+  document.addEventListener('click', onOutErrorFormClick);
 }
 
-//Открытие формы редактирования изображения
-uploadFile.addEventListener('change', openImgUploadForm);
-
-//Закрытие формы редактирования изображения при клике мышкой на Х
-uploadCancel.addEventListener('click', onButtonCloseClick);
-
-//Закрытие формы загрузки изо при нажатии клавишы Escape
-document.addEventListener('keydown', onEscapeClick);
-
-//Функция - что будет, если нажать на кнопку Отправить
-function onSubmit(evt) {
-  evt.preventDefault();
-  if (pristine.validate()) {
-    // eslint-disable-next-line no-console
-    console.log ('Форма отправлена');
+function toggleModalStatus(status) {
+  submitButton.disabled = status;
+  if (status) {
+    submitButton.textContent = 'Публикую...';
   } else {
-    // eslint-disable-next-line no-console
-    console.log ('Форма не отправлена');
+    submitButton.textContent = 'Опубликовать';
   }
 }
 
-imgUploadForm.addEventListener('submit', onSubmit);
+const setUserFormSubmit = (onSuccess) => {
+  imgUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    function showSuccessMessageSendData() {
+      onSuccess();
+      toggleModalStatus(false);
+      showSuccessForm();
+    }
+
+    function showErrorMessageSendData() {
+      showErrorForm();
+      toggleModalStatus(false);
+    }
+
+    if (isValid) {
+      toggleModalStatus(true);
+      sendData(
+        showSuccessMessageSendData,
+        showErrorMessageSendData,
+        new FormData(evt.target),
+      );
+    }
+  });
+};
+
+export {setUserFormSubmit};
