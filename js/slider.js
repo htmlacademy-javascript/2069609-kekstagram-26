@@ -30,7 +30,8 @@ function desctroySlider() {
 }
 
 function updateOptionsSlider(evt, filtersList) {
-  const currentFilter = filtersList[evt.target.value.toUpperCase()];
+  const currentNameFilter = evt.target.value.toUpperCase();
+  const currentFilter = filtersList[currentNameFilter];
   sliderElement.noUiSlider.updateOptions(getParamSlider(currentFilter));
 }
 

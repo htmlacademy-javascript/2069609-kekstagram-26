@@ -46,6 +46,7 @@ function onEscapeClickSuccessForm(evt){
     closeSuccessForm();
   }
 }
+
 function onOutSuccessFormClick(evt) {
   if (evt.target.className !== 'success__inner') {
     closeSuccessForm();
@@ -63,11 +64,6 @@ function onOutErrorFormClick(evt) {
   if (evt.target.className !== 'error__inner') {
     closeErrorForm();
   }
-}
-
-function blockSubmitButton () {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Публикую...';
 }
 
 function showSuccessForm() {
@@ -90,27 +86,36 @@ function showErrorForm() {
   document.addEventListener('click', onOutErrorFormClick);
 }
 
-function unblockSubmitButton () {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Опубликовать';
+function toggleModalStatus(status) {
+  submitButton.disabled = status;
+  if (status) {
+    submitButton.textContent = 'Публикую...';
+  } else {
+    submitButton.textContent = 'Опубликовать';
+  }
 }
 
 const setUserFormSubmit = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
+
+    function showSuccessMessageSendData() {
+      onSuccess();
+      toggleModalStatus(false);
+      showSuccessForm();
+    }
+
+    function showErrorMessageSendData() {
+      showErrorForm();
+      toggleModalStatus(false);
+    }
+
     if (isValid) {
-      blockSubmitButton();
+      toggleModalStatus(true);
       sendData(
-        () => {
-          onSuccess();
-          unblockSubmitButton();
-          showSuccessForm();
-        },
-        () => {
-          showErrorForm();
-          unblockSubmitButton();
-        },
+        showSuccessMessageSendData,
+        showErrorMessageSendData,
         new FormData(evt.target),
       );
     }

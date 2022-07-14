@@ -28,8 +28,8 @@ function renderPictures (userPhotos) {
 
 export {renderPictures};
 
-function onUserPhotoClick (userPhotos) {
-  function getBigPicture(event) {
+function setUserPhotoListener (userPhotos) {
+  function onPictureClick(event) {
     const pictureElement = event.target.closest('.picture');
     if (pictureElement) {
       const idPicture = pictureElement.dataset.id;
@@ -39,7 +39,7 @@ function onUserPhotoClick (userPhotos) {
       }
     }
   }
-  picturesСontainer.addEventListener('click', getBigPicture);
+  picturesСontainer.addEventListener('click', onPictureClick);
 }
 
-export {onUserPhotoClick};
+export {setUserPhotoListener};

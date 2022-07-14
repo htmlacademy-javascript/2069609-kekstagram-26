@@ -1,4 +1,4 @@
-import {renderPictures, onUserPhotoClick} from './picture.js';
+import {renderPictures, setUserPhotoListener} from './picture.js';
 import {setUserFormSubmit} from './submit-form.js';
 import {closeImgUploadForm} from './upload-form.js';
 import {getData} from './api.js';
@@ -7,10 +7,13 @@ import {showAlert} from './util.js';
 
 setUserFormSubmit(closeImgUploadForm);
 
+function showGetDataError() {
+  showAlert('Ошибка загрузки данных с сервера');
+}
+
 getData((photos) => {
   renderPictures(photos);
-  onUserPhotoClick(photos);
+  setUserPhotoListener(photos);
 },
-() => {
-  showAlert('Ошибка загрузки данных с сервера');
-});
+showGetDataError
+);

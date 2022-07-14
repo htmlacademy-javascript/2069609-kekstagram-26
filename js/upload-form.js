@@ -17,6 +17,14 @@ const effectsList = document.querySelector('.effects__list');
 function openImgUploadForm() {
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
+  //Закрытие формы редактирования изображения при клике мышкой на Х
+  uploadCancel.addEventListener('click', onButtonCloseClick);
+  //Закрытие формы загрузки изо при нажатии клавишы Escape
+  document.addEventListener('keydown', onEscapeClick);
+  buttonSmaller.addEventListener('click', getSmaller);
+  buttonBigger.addEventListener('click', getBigger);
+  // Обработчик событий на изменение фильтра
+  effectsList.addEventListener('change', onChangeFilter);
 }
 
 function closeImgUploadForm() {
@@ -27,6 +35,12 @@ function closeImgUploadForm() {
   textDescription.value = '';
   onOriginalFilterClick();
   updateScale(VALUE_DEFAULT);
+
+  uploadCancel.removeEventListener('click', onButtonCloseClick);
+  document.removeEventListener('keydown', onEscapeClick);
+  buttonSmaller.removeEventListener('click', getSmaller);
+  buttonBigger.removeEventListener('click', getBigger);
+  effectsList.removeEventListener('change', onChangeFilter);
 }
 
 function onButtonCloseClick() {
@@ -44,17 +58,5 @@ function onEscapeClick(evt) {
 
 //Открытие формы редактирования изображения
 uploadFile.addEventListener('change', openImgUploadForm);
-
-//Закрытие формы редактирования изображения при клике мышкой на Х
-uploadCancel.addEventListener('click', onButtonCloseClick);
-
-//Закрытие формы загрузки изо при нажатии клавишы Escape
-document.addEventListener('keydown', onEscapeClick);
-
-buttonSmaller.addEventListener('click', getSmaller);
-buttonBigger.addEventListener('click', getBigger);
-
-// Обработчик событий на изменение фильтра
-effectsList.addEventListener('change', onChangeFilter);
 
 export{closeImgUploadForm, openImgUploadForm};

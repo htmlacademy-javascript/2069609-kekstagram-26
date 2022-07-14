@@ -79,6 +79,8 @@ function onFilterClick(evt) {
 
 function onOriginalFilterClick() {
   desctroySlider();
+  const uploadForm = document.querySelector('.img-upload__form');
+  uploadForm.reset();
   imgPreview.className = 'img-upload__preview';
   imgPreview.style.filter = '';
   effectValueInput.setAttribute('value', '1');
