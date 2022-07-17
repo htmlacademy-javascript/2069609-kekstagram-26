@@ -6,6 +6,13 @@ const similarPictureTemplate = document.querySelector('#picture')
 const picturesСontainer = document.querySelector('.pictures');
 const picturesFragment = document.createDocumentFragment();
 
+function deletePictures() {
+  const pictures = picturesСontainer.querySelectorAll('.picture');
+  pictures.forEach((picture) => {
+    picture.remove();
+  });
+}
+
 function createPictureElement(userPhoto) {
   const {likes, url, comments, id} = userPhoto;
   const pictureElement = similarPictureTemplate.cloneNode(true);
@@ -42,4 +49,4 @@ function setUserPhotoListener (userPhotos) {
   picturesСontainer.addEventListener('click', onPictureClick);
 }
 
-export {setUserPhotoListener};
+export {setUserPhotoListener, deletePictures};

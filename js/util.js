@@ -57,4 +57,26 @@ function haveSameElements(arrayOfElements) {
   return [...new Set(arrayOfElements)].length !== arrayOfElements.length;
 }
 
-export {getRandomNumber, isLengthValid, isEscapeKey, haveSameElements, showAlert};
+function debounce(callback, timeoutDelay) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+function shuffle(array) {
+  let currentIndex = array.length;
+  let randomIndex;
+  // While there remain elements to shuffle.
+  while (currentIndex !== 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+  return array;
+}
+
+export {getRandomNumber, isLengthValid, isEscapeKey, haveSameElements, showAlert, debounce, shuffle};

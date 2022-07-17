@@ -2,6 +2,8 @@ import {isEscapeKey} from './util.js';
 import {onOriginalFilterClick, onChangeFilter} from './effects.js';
 import {updateScale, VALUE_DEFAULT, getBigger, getSmaller} from './scale.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const uploadFile = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -11,8 +13,20 @@ const textHashtags = imgUploadForm.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
+const fileChooser = document.querySelector('#upload-file');
+const preview = document.querySelector('.img-upload__preview').querySelector('img');
+
 //Контейнер, в котором сидят все фильтры
 const effectsList = document.querySelector('.effects__list');
+
+function getPreviewPhoto() {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+  }
+}
 
 function openImgUploadForm() {
   uploadOverlay.classList.remove('hidden');
@@ -31,6 +45,7 @@ function closeImgUploadForm() {
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   uploadFile.value = '';
+  preview.src = '';
   textHashtags.value = '';
   textDescription.value = '';
   onOriginalFilterClick();
@@ -59,4 +74,5 @@ function onEscapeClick(evt) {
 //Открытие формы редактирования изображения
 uploadFile.addEventListener('change', openImgUploadForm);
 
+fileChooser.addEventListener('change', getPreviewPhoto);
 export{closeImgUploadForm, openImgUploadForm};

@@ -3,7 +3,7 @@ import {setUserFormSubmit} from './submit-form.js';
 import {closeImgUploadForm} from './upload-form.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
-
+import {setFilterListener} from './filters.js';
 
 setUserFormSubmit(closeImgUploadForm);
 
@@ -13,7 +13,9 @@ function showGetDataError() {
 
 getData((photos) => {
   renderPictures(photos);
+  document.querySelector('.img-filters').classList.remove('img-filters--inactive');
   setUserPhotoListener(photos);
+  setFilterListener(photos);
 },
 showGetDataError
 );

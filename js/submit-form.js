@@ -88,11 +88,7 @@ function showErrorForm() {
 
 function toggleModalStatus(status) {
   submitButton.disabled = status;
-  if (status) {
-    submitButton.textContent = 'Публикую...';
-  } else {
-    submitButton.textContent = 'Опубликовать';
-  }
+  submitButton.textContent = status === true ? 'Публикую...' : 'Опубликовать';
 }
 
 const setUserFormSubmit = (onSuccess) => {
