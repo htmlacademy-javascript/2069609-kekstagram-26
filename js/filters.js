@@ -12,13 +12,13 @@ function compareCountComments(a, b) {
 
 //функция отрисовки фоток согласно выбраноому фильтру
 function renderFilterPictures(filterId, userPhotos){
-  let currentUserPhotos = userPhotos;
+  let currentUserPhotos = userPhotos.slice();
   deletePictures();
   if (filterId === 'filter-random') {
-    currentUserPhotos = shuffle(userPhotos.slice()).slice(0, MAX_RANDOM_PHOTOS);
+    currentUserPhotos = shuffle(currentUserPhotos).slice(0, MAX_RANDOM_PHOTOS);
   }
   if (filterId === 'filter-discussed') {
-    currentUserPhotos = (userPhotos.slice()).sort(compareCountComments);
+    currentUserPhotos = (currentUserPhotos).sort(compareCountComments);
   }
   renderPictures(currentUserPhotos);
 }
@@ -47,7 +47,9 @@ function setFilterListener(userPhotos) {
 
 function getActiveclass(event) {
   deleteActiveClass();
-  event.target.classList.add('img-filters__button--active');
+  if (event.target.className === 'img-filters__button') {
+    event.target.classList.add('img-filters__button--active');
+  }
 }
 
 //вот как я вышла из ситуации!

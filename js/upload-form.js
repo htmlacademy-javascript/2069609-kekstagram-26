@@ -63,10 +63,12 @@ function onButtonCloseClick() {
 }
 
 function onEscapeClick(evt) {
-  if (isEscapeKey(evt) && textHashtags !== document.activeElement) {
-    if (textDescription !== document.activeElement) {
-      evt.preventDefault();
-      closeImgUploadForm();
+  if (!document.querySelector('.error')) {
+    if (isEscapeKey(evt) && textHashtags !== document.activeElement) {
+      if (textDescription !== document.activeElement) {
+        evt.preventDefault();
+        closeImgUploadForm();
+      }
     }
   }
 }

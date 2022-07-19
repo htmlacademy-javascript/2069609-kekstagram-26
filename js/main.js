@@ -4,6 +4,7 @@ import {closeImgUploadForm} from './upload-form.js';
 import {getData} from './api.js';
 import {showAlert} from './util.js';
 import {setFilterListener} from './filters.js';
+import './big-picture.js';
 
 setUserFormSubmit(closeImgUploadForm);
 
