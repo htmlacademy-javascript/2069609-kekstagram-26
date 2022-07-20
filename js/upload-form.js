@@ -16,7 +16,6 @@ const buttonBigger = document.querySelector('.scale__control--bigger');
 const fileChooser = document.querySelector('#upload-file');
 const preview = document.querySelector('.img-upload__preview').querySelector('img');
 
-//Контейнер, в котором сидят все фильтры
 const effectsList = document.querySelector('.effects__list');
 
 function getPreviewPhoto() {
@@ -31,13 +30,10 @@ function getPreviewPhoto() {
 function openImgUploadForm() {
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  //Закрытие формы редактирования изображения при клике мышкой на Х
   uploadCancel.addEventListener('click', onButtonCloseClick);
-  //Закрытие формы загрузки изо при нажатии клавишы Escape
   document.addEventListener('keydown', onEscapeClick);
   buttonSmaller.addEventListener('click', getSmaller);
   buttonBigger.addEventListener('click', getBigger);
-  // Обработчик событий на изменение фильтра
   effectsList.addEventListener('change', onChangeFilter);
 }
 
@@ -73,8 +69,7 @@ function onEscapeClick(evt) {
   }
 }
 
-//Открытие формы редактирования изображения
 uploadFile.addEventListener('change', openImgUploadForm);
-
 fileChooser.addEventListener('change', getPreviewPhoto);
+
 export{closeImgUploadForm, openImgUploadForm};

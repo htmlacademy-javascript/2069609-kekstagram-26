@@ -5,12 +5,11 @@ const MAX_RANDOM_PHOTOS = 10;
 const TIME_OF_DELAY = 500;
 
 const filterForm = document.querySelector('.img-filters__form');
-// функция сортировки
+
 function compareCountComments(a, b) {
   return b.comments.length - a.comments.length;
 }
 
-//функция отрисовки фоток согласно выбраноому фильтру
 function renderFilterPictures(filterId, userPhotos){
   let currentUserPhotos = userPhotos.slice();
   deletePictures();
@@ -52,6 +51,5 @@ function getActiveclass(event) {
   }
 }
 
-//вот как я вышла из ситуации!
 filterForm.addEventListener('click', getActiveclass);
 export{setFilterListener};

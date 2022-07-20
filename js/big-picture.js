@@ -1,21 +1,15 @@
 import {isEscapeKey} from './util.js';
 
-// Окно большой фотки
 const bigPicture = document.querySelector('.big-picture');
-// Кнопка для выхода из полноэкранного просмотра изображения
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
-// Блок счётчика комментариев
 const commentCount = document.querySelector('.social__comment-count');
-// Блок загрузки новых комментариев
 const commentsLoader = document.querySelector('.comments-loader');
-// Блок для списка комментариев под фотографией
 const commentsBlock = document.querySelector('.social__comments');
 const body = document.querySelector('body');
 const commentTemplate = document.querySelector('#comments').content.querySelector('.social__comment');
 const DEFAULT_COMMENT_COUNT = 5;
 let currentCommentCount = DEFAULT_COMMENT_COUNT;
 
-//Функция создания одного элемента комментария
 function createComment (comment) {
   const newComment = commentTemplate.cloneNode(true);
   newComment.querySelector('.social__picture').src = comment.avatar;
@@ -24,14 +18,12 @@ function createComment (comment) {
   return newComment;
 }
 
-// Функция отрисовки целого блока комментарии
 function createCommentsBlock(comments) {
   comments.forEach((comment) => {
     commentsBlock.appendChild(createComment(comment));
   });
 }
 
-// Функция отрисовки фото в полноэкранном режиме
 function createBigPicture (userPhoto) {
   commentsLoader.classList.remove('hidden');
   currentCommentCount = DEFAULT_COMMENT_COUNT;
@@ -55,20 +47,25 @@ function createBigPicture (userPhoto) {
   body.classList.add('modal-open');
 
   commentsBlock.innerHTML = '';
-  if (comments.length > 0) {
-    if (comments.length <= 5) {
+
+  function getComments(){
+    if (comments.length === 0) {
+      commentCount.textContent = '';
+      return;
+    }
+    if (comments.length <= DEFAULT_COMMENT_COUNT) {
       createCommentsBlock(comments);
       commentsLoader.classList.add('hidden');
       commentCount.textContent = `${comments.length} из ${comments.length} комментариев`;
-    } else {
-      createCommentsBlock(comments.slice(0, 5));
-      commentCount.textContent = `5 из ${comments.length} комментариев`;
-      commentsLoader.addEventListener('click', onCommentsLoaderButtonClick);
+      return;
     }
-  } else {
-    commentCount.textContent = '';
+    createCommentsBlock(comments.slice(0, 5));
+    commentCount.textContent = `5 из ${comments.length} комментариев`;
+    commentsLoader.addEventListener('click', onCommentsLoaderButtonClick);
   }
-  // Функция выхода из полноэкранного режима фотогафии (при нажатии на клавишу ESC)
+
+  getComments();
+
   function onEscapeClick(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
@@ -81,7 +78,7 @@ function createBigPicture (userPhoto) {
   }
 
   document.addEventListener('keydown', onEscapeClick);
-  // Функция выхода из полноэкранного режима фотогафии (при нажатии на кнопку Х)
+
   function onButtonCloseClick() {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');

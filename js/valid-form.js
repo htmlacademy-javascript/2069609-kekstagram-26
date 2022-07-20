@@ -1,10 +1,13 @@
 import {haveSameElements} from './util.js';
 
+const MAX_HASHTAG_LENGTH = 20;
+const MAX_COUNT_HASHTAG = 5;
+const MAX_DESCRIPTION_LENGTH = 140;
+
 const imgUploadForm = document.querySelector('.img-upload__form');
 const textHashtags = imgUploadForm.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 
-//Какие могут быть ошибки в оформлении хэштегов
 const HashtagRules = {
   FIRST_SYMBOL_IS_HASH: 'хэш-тег начинается с символа # (решётка)',
   NO_SPECIAL_SYMBOLS: 'строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.',
@@ -24,7 +27,6 @@ const pristine = new Pristine(imgUploadForm, {
 
 let errorHashtags = HashtagRules.NO_ERROR;
 
-//функция валидации одного хэштега
 function validateHashtag(hashtag) {
   const reHashtag =  /^#[A-Za-zА-Яа-яЕё0-9]{1,19}$/;
   if (!reHashtag.test(hashtag)) {
@@ -36,7 +38,7 @@ function validateHashtag(hashtag) {
       errorHashtags = HashtagRules.NOT_ONLY_HASHTAG;
       return false;
     }
-    if (hashtag.length > 20) {
+    if (hashtag.length > MAX_HASHTAG_LENGTH) {
       errorHashtags = HashtagRules.MAX_LENGTH;
       return false;
     }
@@ -46,12 +48,11 @@ function validateHashtag(hashtag) {
   return true;
 }
 
-// true - если все правила выполнены, false - если есть ошибка
 function validateHashtags(value) {
   value = value.trim();
   if (value) {
     const hashtags = value.toLowerCase().split(' ');
-    if (hashtags.length > 5) {
+    if (hashtags.length > MAX_COUNT_HASHTAG) {
       errorHashtags = HashtagRules.MAX_COUNT;
       return false;
     }
@@ -67,14 +68,13 @@ function validateHashtags(value) {
   }
   return true;
 }
-// Функция отрисовки текста ошибки
 const getHashtagErrorMessage = () => errorHashtags;
 
 pristine.addValidator(textHashtags, validateHashtags, getHashtagErrorMessage);
 
 function validateDescription(value) {
-  if (value.length <= 140) {
-    return (value.length <= 140);
+  if (value.length <= MAX_DESCRIPTION_LENGTH) {
+    return (value.length <= MAX_DESCRIPTION_LENGTH);
   }
 }
 const descriptionError = 'Длина комментария не может составлять больше 140 символов';

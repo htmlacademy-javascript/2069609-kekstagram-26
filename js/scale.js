@@ -2,9 +2,8 @@ const picture = document.querySelector('.img-upload__preview');
 const MIN_VALUE = 25;
 const MAX_VALUE = 100;
 const STEP_VALUE = 25;
-//Значение масштаба по умолчанию
 const VALUE_DEFAULT = 100;
-// Поле значение масштаба
+
 const scale = document.querySelector('.scale__control--value');
 let scaleCurrent = VALUE_DEFAULT;
 scale.setAttribute('value', `${VALUE_DEFAULT}%`);
