@@ -19,7 +19,6 @@ function createPictureElement(userPhoto) {
   pictureElement.querySelector('.picture__comments').textContent = comments.length;
   pictureElement.querySelector('.picture__likes').textContent = likes;
   pictureElement.querySelector('.picture__img').src = url;
-  // СЮДА ДОБАВИМ ДАТА-АТРИБУТ
   pictureElement.dataset.id = id;
   return pictureElement;
 
@@ -32,8 +31,6 @@ function renderPictures (userPhotos) {
   });
   picturesСontainer.appendChild(picturesFragment);
 }
-
-export {renderPictures};
 
 function setUserPhotoListener (userPhotos) {
   function onPictureClick(event) {
@@ -49,4 +46,4 @@ function setUserPhotoListener (userPhotos) {
   picturesСontainer.addEventListener('click', onPictureClick);
 }
 
-export {setUserPhotoListener, deletePictures};
+export {renderPictures, setUserPhotoListener, deletePictures};

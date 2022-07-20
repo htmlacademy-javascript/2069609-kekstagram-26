@@ -1,10 +1,8 @@
 import {desctroySlider, renderSlider} from './slider.js';
 
 const imgPreview = document.querySelector('.img-upload__preview');
-//через стили это поле невидимое
 const effectValueInput = document.querySelector('.effect-level__value');
 
-//Описываем фильтры
 const SliderConfigs = {
   NONE: {
     filterId: 'effect-none',
@@ -86,7 +84,6 @@ function onOriginalFilterClick() {
   effectValueInput.setAttribute('value', '1');
 }
 
-// Действия, при нажатии на один из фильтров
 function onChangeFilter(evt) {
   if (evt.target.id !== 'effect-none') {
     onFilterClick(evt);
