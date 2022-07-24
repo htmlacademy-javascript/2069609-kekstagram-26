@@ -1,7 +1,8 @@
 import {desctroySlider, renderSlider} from './slider.js';
 
-const imgPreview = document.querySelector('.img-upload__preview');
+const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
 const effectValueInput = document.querySelector('.effect-level__value');
+const sliderField = document.querySelector('.img-upload__effect-level');
 
 const SliderConfigs = {
   NONE: {
@@ -66,26 +67,29 @@ const SliderConfigs = {
   }
 };
 
+//здесь не работает без setAttribute
 effectValueInput.setAttribute('value', '1');
 
 function onFilterClick(evt) {
+  sliderField.classList.remove('hidden');
   const currentNameFilter = evt.target.value.toUpperCase();
   const currentFilter = SliderConfigs[currentNameFilter];
   renderSlider(evt, currentNameFilter, SliderConfigs);
-  imgPreview.className = `img-upload__preview effects__preview--${currentFilter.filterName}`;
+  imgPreview.className = `effects__preview--${currentFilter.filterName}`;
 }
 
 function onOriginalFilterClick() {
   desctroySlider();
   const uploadForm = document.querySelector('.img-upload__form');
   uploadForm.reset();
-  imgPreview.className = 'img-upload__preview';
+  imgPreview.className = '';
   imgPreview.style.filter = '';
+  //здесь не работает без setAttribute
   effectValueInput.setAttribute('value', '1');
 }
 
 function onChangeFilter(evt) {
-  if (evt.target.id !== 'effect-none') {
+  if (evt.target.id !== SliderConfigs.NONE.filterId) {
     onFilterClick(evt);
   } else {
     onOriginalFilterClick();

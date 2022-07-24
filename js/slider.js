@@ -1,7 +1,9 @@
 const sliderElement = document.querySelector('.effect-level__slider');
-const imgPreview = document.querySelector('.img-upload__preview');
+const sliderField = document.querySelector('.img-upload__effect-level');
+const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
 const effectValueInput = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
+const originFilterName = 'NONE';
 
 function getParamSlider(filter) {
   return (
@@ -25,6 +27,7 @@ function onUpdateSlider(filter) {
 function desctroySlider() {
   if (sliderElement.noUiSlider) {
     sliderElement.noUiSlider.destroy();
+    sliderField.classList.add('hidden');
   }
 }
 
@@ -39,8 +42,9 @@ function renderSlider(evt, currentNameFilter, filtersList) {
   if (!sliderElement.noUiSlider) {
     noUiSlider.create(sliderElement, getParamSlider(currentFilter));
   } else {
-    if (currentNameFilter !== 'NONE') {
-      effectsList.addEventListener('click', updateOptionsSlider(evt, filtersList));
+    if (currentNameFilter !== originFilterName) {
+      const onEffectClick = updateOptionsSlider(evt, filtersList);
+      effectsList.addEventListener('click', onEffectClick);
     }
   }
   sliderElement.noUiSlider.on('update', onUpdateSlider(currentFilter));

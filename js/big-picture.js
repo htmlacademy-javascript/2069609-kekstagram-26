@@ -89,6 +89,4 @@ function createBigPicture (userPhoto) {
   bigPictureCancel.addEventListener('click', onButtonCloseClick);
 }
 
-
 export {createBigPicture};
-

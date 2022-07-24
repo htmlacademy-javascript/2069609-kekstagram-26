@@ -3,6 +3,14 @@ import {shuffle} from './util.js';
 import {deletePictures, renderPictures} from './picture.js';
 const MAX_RANDOM_PHOTOS = 10;
 const TIME_OF_DELAY = 500;
+const FILTERS_NAME = {
+  RANDOM: {
+    filterId: 'filter-random'
+  },
+  DISCUSSED: {
+    filterId: 'filter-discussed'
+  }
+};
 
 const filterForm = document.querySelector('.img-filters__form');
 
@@ -13,10 +21,10 @@ function compareCountComments(a, b) {
 function renderFilterPictures(filterId, userPhotos){
   let currentUserPhotos = userPhotos.slice();
   deletePictures();
-  if (filterId === 'filter-random') {
+  if (filterId === FILTERS_NAME.RANDOM.filterId) {
     currentUserPhotos = shuffle(currentUserPhotos).slice(0, MAX_RANDOM_PHOTOS);
   }
-  if (filterId === 'filter-discussed') {
+  if (filterId === FILTERS_NAME.DISCUSSED.filterId) {
     currentUserPhotos = (currentUserPhotos).sort(compareCountComments);
   }
   renderPictures(currentUserPhotos);
@@ -34,22 +42,20 @@ function setFilterListener(userPhotos) {
     const filterButton = event.target.closest('.img-filters__button');
     if(filterButton) {
       const filterId = event.target.id;
-      getActiveclass(event);
-      if (event.target && filterButton !== null) {
-        renderFilterPictures(filterId, userPhotos);
-      }
+      onActiveButtonClick(event);
+      renderFilterPictures(filterId, userPhotos);
     }
   }
-  const debounceOnFilterClick = debounce(onFilterClick, TIME_OF_DELAY);
-  filterForm.addEventListener('click', debounceOnFilterClick);
+  const onDebounceFilterClick = debounce(onFilterClick, TIME_OF_DELAY);
+  filterForm.addEventListener('click', onDebounceFilterClick);
 }
 
-function getActiveclass(event) {
+function onActiveButtonClick(event) {
   deleteActiveClass();
   if (event.target.className === 'img-filters__button') {
     event.target.classList.add('img-filters__button--active');
   }
 }
 
-filterForm.addEventListener('click', getActiveclass);
+filterForm.addEventListener('click', onActiveButtonClick);
 export{setFilterListener};
