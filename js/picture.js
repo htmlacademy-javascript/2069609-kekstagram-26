@@ -38,9 +38,7 @@ function setUserPhotoListener (userPhotos) {
     if (pictureElement) {
       const idPicture = pictureElement.dataset.id;
       const bigPictireObject = userPhotos.find((userPhoto) => userPhoto.id === Number(idPicture));
-      if (event.target && pictureElement !== null) {
-        createBigPicture(bigPictireObject);
-      }
+      createBigPicture(bigPictireObject);
     }
   }
   picturesСontainer.addEventListener('click', onPictureClick);

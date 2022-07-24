@@ -1,4 +1,4 @@
-const picture = document.querySelector('.img-upload__preview');
+const picture = document.querySelector('.img-upload__preview').querySelector('img');
 const MIN_VALUE = 25;
 const MAX_VALUE = 100;
 const STEP_VALUE = 25;
@@ -6,11 +6,15 @@ const VALUE_DEFAULT = 100;
 
 const scale = document.querySelector('.scale__control--value');
 let scaleCurrent = VALUE_DEFAULT;
-scale.setAttribute('value', `${VALUE_DEFAULT}%`);
-
+scale.value = `${VALUE_DEFAULT}%`;
 function updateScale(scaleValue) {
-  scale.setAttribute('value', `${scaleValue}%`);
+  scale.value = `${scaleValue}%`;
   picture.style.transform = `scale(${(scaleValue/100).toFixed(2)})`;
+}
+
+function updateScaleDefault() {
+  scaleCurrent = VALUE_DEFAULT;
+  updateScale(VALUE_DEFAULT);
 }
 
 function getSmaller() {
@@ -29,5 +33,4 @@ function getBigger() {
   updateScale(scaleCurrent);
 }
 
-export{updateScale, VALUE_DEFAULT, getBigger, getSmaller};
-
+export{updateScaleDefault, getBigger, getSmaller};

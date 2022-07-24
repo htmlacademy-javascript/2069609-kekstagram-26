@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
+const KEY_NAME = 'Escape';
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -21,30 +22,7 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-function getRandomNumber (minRange, maxRange) {
-  let randomNumber;
-  if (minRange < 0 || minRange > maxRange) {
-    randomNumber = null;
-    throw new RangeError('!!Проверьте значения диапазона!!');
-  }
-
-  const min = Math.ceil(minRange);
-  const max = Math.floor(maxRange);
-
-  if (min > max) {
-    randomNumber = null;
-    throw new RangeError('!!Проверьте значения диапазона!!');
-  }
-  if (min === max) {
-    randomNumber = min;
-    return randomNumber;
-  }
-
-  randomNumber = Math.random() * (max - min + 1);
-  return Math.floor(randomNumber) + min;
-}
-
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === KEY_NAME;
 
 function haveSameElements(arrayOfElements) {
   return [...new Set(arrayOfElements)].length !== arrayOfElements.length;
@@ -69,4 +47,4 @@ function shuffle(array) {
   return array;
 }
 
-export {getRandomNumber, isEscapeKey, haveSameElements, showAlert, debounce, shuffle};
+export {isEscapeKey, haveSameElements, showAlert, debounce, shuffle};

@@ -1,6 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {onOriginalFilterClick, onChangeFilter} from './effects.js';
-import {updateScale, VALUE_DEFAULT, getBigger, getSmaller} from './scale.js';
+import {updateScaleDefault, getBigger, getSmaller} from './scale.js';
+import { pristine } from './valid-form.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -15,6 +16,7 @@ const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
 const fileChooser = document.querySelector('#upload-file');
 const preview = document.querySelector('.img-upload__preview').querySelector('img');
+const sliderField = document.querySelector('.img-upload__effect-level');
 
 const effectsList = document.querySelector('.effects__list');
 
@@ -28,6 +30,8 @@ function getPreviewPhoto() {
 }
 
 function openImgUploadForm() {
+  sliderField.classList.add('hidden');
+  updateScaleDefault();
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   uploadCancel.addEventListener('click', onButtonCloseClick);
@@ -45,13 +49,14 @@ function closeImgUploadForm() {
   textHashtags.value = '';
   textDescription.value = '';
   onOriginalFilterClick();
-  updateScale(VALUE_DEFAULT);
 
   uploadCancel.removeEventListener('click', onButtonCloseClick);
   document.removeEventListener('keydown', onEscapeClick);
   buttonSmaller.removeEventListener('click', getSmaller);
   buttonBigger.removeEventListener('click', getBigger);
   effectsList.removeEventListener('change', onChangeFilter);
+
+  pristine.reset();
 }
 
 function onButtonCloseClick() {
