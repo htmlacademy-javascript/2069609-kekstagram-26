@@ -6,15 +6,19 @@ const VALUE_DEFAULT = 100;
 
 const scale = document.querySelector('.scale__control--value');
 let scaleCurrent = VALUE_DEFAULT;
-scale.value = `${VALUE_DEFAULT}%`;
+//здесь не работает без setAttribute
+scale.setAttribute('value', `${VALUE_DEFAULT}%`);
+
 function updateScale(scaleValue) {
-  scale.value = `${scaleValue}%`;
+  //здесь не работает без setAttribute
+  scale.setAttribute('value', `${scaleValue}%`);
   picture.style.transform = `scale(${(scaleValue/100).toFixed(2)})`;
 }
 
-function updateScaleDefault() {
+function resetScale() {
   scaleCurrent = VALUE_DEFAULT;
-  updateScale(VALUE_DEFAULT);
+  scale.setAttribute('value', `${VALUE_DEFAULT}%`);
+  picture.style.transform = `scale(${(VALUE_DEFAULT/100).toFixed(2)})`;
 }
 
 function getSmaller() {
@@ -33,4 +37,4 @@ function getBigger() {
   updateScale(scaleCurrent);
 }
 
-export{updateScaleDefault, getBigger, getSmaller};
+export{resetScale, getBigger, getSmaller};

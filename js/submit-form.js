@@ -93,6 +93,7 @@ function toggleModalStatus(status) {
 
 const setUserFormSubmit = (onSuccess) => {
   imgUploadForm.addEventListener('submit', (evt) => {
+
     evt.preventDefault();
     const isValid = pristine.validate();
 

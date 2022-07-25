@@ -1,8 +1,7 @@
-import {desctroySlider, renderSlider} from './slider.js';
+import {desctroySlider, renderSlider, showSlider} from './slider.js';
 
 const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
 const effectValueInput = document.querySelector('.effect-level__value');
-const sliderField = document.querySelector('.img-upload__effect-level');
 
 const SliderConfigs = {
   NONE: {
@@ -67,11 +66,12 @@ const SliderConfigs = {
   }
 };
 
+const originFilter = document.querySelector(`#${SliderConfigs.NONE.filterId}`);
 //здесь не работает без setAttribute
 effectValueInput.setAttribute('value', '1');
 
 function onFilterClick(evt) {
-  sliderField.classList.remove('hidden');
+  showSlider();
   const currentNameFilter = evt.target.value.toUpperCase();
   const currentFilter = SliderConfigs[currentNameFilter];
   renderSlider(evt, currentNameFilter, SliderConfigs);
@@ -80,12 +80,11 @@ function onFilterClick(evt) {
 
 function onOriginalFilterClick() {
   desctroySlider();
-  const uploadForm = document.querySelector('.img-upload__form');
-  uploadForm.reset();
   imgPreview.className = '';
   imgPreview.style.filter = '';
   //здесь не работает без setAttribute
   effectValueInput.setAttribute('value', '1');
+  originFilter.checked = true;
 }
 
 function onChangeFilter(evt) {
