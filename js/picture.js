@@ -21,7 +21,6 @@ function createPictureElement(userPhoto) {
   pictureElement.querySelector('.picture__img').src = url;
   pictureElement.dataset.id = id;
   return pictureElement;
-
 }
 
 function renderPictures (userPhotos) {

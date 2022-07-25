@@ -1,7 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {onOriginalFilterClick, onChangeFilter} from './effects.js';
-import {updateScaleDefault, getBigger, getSmaller} from './scale.js';
-import { pristine } from './valid-form.js';
+import {resetScale, getBigger, getSmaller} from './scale.js';
+import {pristine} from './valid-form.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -30,8 +30,9 @@ function getPreviewPhoto() {
 }
 
 function openImgUploadForm() {
-  sliderField.classList.add('hidden');
-  updateScaleDefault();
+  if (!document.querySelector('.error__button')) {
+    sliderField.classList.add('hidden');
+  }
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   uploadCancel.addEventListener('click', onButtonCloseClick);
@@ -49,6 +50,7 @@ function closeImgUploadForm() {
   textHashtags.value = '';
   textDescription.value = '';
   onOriginalFilterClick();
+  resetScale();
 
   uploadCancel.removeEventListener('click', onButtonCloseClick);
   document.removeEventListener('keydown', onEscapeClick);

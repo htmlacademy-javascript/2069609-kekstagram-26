@@ -3,7 +3,7 @@ const sliderField = document.querySelector('.img-upload__effect-level');
 const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
 const effectValueInput = document.querySelector('.effect-level__value');
 const effectsList = document.querySelector('.effects__list');
-const originFilterName = 'NONE';
+const ORIGIN_FILTER_NAME = 'NONE';
 
 function getParamSlider(filter) {
   return (
@@ -31,6 +31,10 @@ function desctroySlider() {
   }
 }
 
+function showSlider() {
+  sliderField.classList.remove('hidden');
+}
+
 function updateOptionsSlider(evt, filtersList) {
   const currentNameFilter = evt.target.value.toUpperCase();
   const currentFilter = filtersList[currentNameFilter];
@@ -42,7 +46,7 @@ function renderSlider(evt, currentNameFilter, filtersList) {
   if (!sliderElement.noUiSlider) {
     noUiSlider.create(sliderElement, getParamSlider(currentFilter));
   } else {
-    if (currentNameFilter !== originFilterName) {
+    if (currentNameFilter !== ORIGIN_FILTER_NAME) {
       const onEffectClick = updateOptionsSlider(evt, filtersList);
       effectsList.addEventListener('click', onEffectClick);
     }
@@ -50,4 +54,4 @@ function renderSlider(evt, currentNameFilter, filtersList) {
   sliderElement.noUiSlider.on('update', onUpdateSlider(currentFilter));
 }
 
-export{getParamSlider, onUpdateSlider, desctroySlider, updateOptionsSlider, renderSlider};
+export{desctroySlider, renderSlider, showSlider};

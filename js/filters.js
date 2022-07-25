@@ -1,4 +1,4 @@
-import { debounce } from './util.js';
+import {debounce} from './util.js';
 import {shuffle} from './util.js';
 import {deletePictures, renderPictures} from './picture.js';
 const MAX_RANDOM_PHOTOS = 10;
